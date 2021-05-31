@@ -1,31 +1,62 @@
 package graphics;
 
-import org.w3c.dom.css.Rect;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class Counter extends JPanel {
+public class Counter extends JLabel {
 
-    Color color;
-    Rectangle dimens;
-    int x, y;
+    private final Rectangle DIMENS;
+    private Color color;
+    private int id, colorInt;
 
-    public Counter(int color, int x, int y, Rectangle dimens){
-        if(color == 0){
+
+    /**
+     * A Circle Counter that can be Red, Yellow, White
+     *
+     * @param id     identification
+     * @param color  Color of Counter represented by Int
+     * @param dimens
+     */
+    public Counter(int id, int color, Rectangle dimens) {
+        this.id = id;
+
+        colorInt = color;
+        if (color == 0) {
+            this.color = Color.WHITE;
+        } else if (color == 1) {
+            this.color = Color.YELLOW;
+        } else {
             this.color = Color.RED;
         }
-        else{
-            this.color = Color.YELLOW;
-        }
-        this.x = x;
-        this.y = y;
-        this.dimens = dimens;
+        this.DIMENS = dimens;
     }
 
-    public void paintCircle(Graphics g) {
+    @Override
+    public void paint(Graphics g) {
         g.setColor(color);
-        g.fillOval(x, y, dimens.width/7, dimens.height/6);
+        g.fillOval(0, 0, DIMENS.width / 7, DIMENS.height / 6);
         setVisible(true);
+    }
+
+    public int getColorInt() {
+        return colorInt;
+    }
+
+    /**
+     * Takes an Int and converts it to one of three color
+     *
+     * @param arr
+     * @param color
+     */
+    public void setColor(int[] arr, int color) {
+        if (color == 0) {
+            this.color = Color.WHITE;
+        } else if (color == 1) {
+            this.color = Color.YELLOW;
+        } else {
+            this.color = Color.RED;
+        }
+
+        arr[id] = color;
     }
 }

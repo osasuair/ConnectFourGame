@@ -2,21 +2,21 @@ package graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 
 public class BuildFrame extends JFrame {
 
     /**
      * Creates a window for the grid
-     * @param title Title of the frame
-     * @param w width
-     * @param h height
-     * @param rows # of rows
+     *
+     * @param title   Title of the frame
+     * @param w       width
+     * @param h       height
+     * @param rows    # of rows
      * @param columns # of columns
      */
     public BuildFrame(String title, int w, int h, int rows, int columns) {
+
 
         // When the user selects the exit button, they are prompted to confirm exit and if they choose yes, the
         // will close
@@ -32,29 +32,19 @@ public class BuildFrame extends JFrame {
             }
         });
 
-        // Automatically resize window to correct aspect ratio
-        this.addComponentListener(new ResizeListener());
+        // Using the Border Layout to organize the different elements in the game
+        this.setLayout(new BorderLayout());
 
-        // Adding the drawn grid into the frame using the Draw class
-        Draw draw = new Draw(w, h , rows, columns);
-        add(draw);
+        // Adding the drawn grid into the frame using the CounterGrid class
+        add(new Grid(w, h, rows, columns));
 
         // Set Frame title, size, minimum size, border, and location
         setTitle(title);
         setSize(w, h);
-        setMinimumSize(new Dimension(700, 600));
+        setResizable(false);
         setLocationRelativeTo(null);
-        getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
         setVisible(true);
 
     }
 
-
-    private class ResizeListener extends ComponentAdapter {
-        @Override
-        public void componentResized(ComponentEvent arg0) {
-            Rectangle b = arg0.getComponent().getBounds();
-            arg0.getComponent().setBounds(b.x, b.y, b.width, b.width*6/7);
-        }
-    }
 }
