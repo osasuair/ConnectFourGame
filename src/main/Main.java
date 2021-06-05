@@ -1,10 +1,10 @@
 package main;
 
+import gameplay.Gameplay;
 import graphics.BuildFrame;
 import graphics.CounterGrid;
 import graphics.NextButton;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Main {
@@ -15,26 +15,36 @@ public class Main {
 
         // The CounterGrid class contains a JPanel that is used to store the counters and the gridInt Array stores what counters is in what positions.
         CounterGrid counterGrid = new CounterGrid();
-        int[] gridInt = new int[42];
+        int[][] gridInt = new int[6][7];
         counterGrid.createGrid(buildFrame, gridInt);
 
         // Adding the next button
-        buildFrame.add(new NextButton(), BorderLayout.PAGE_END);
+        NextButton nextButton = new NextButton();
+        buildFrame.add(nextButton, BorderLayout.PAGE_END);
 
         buildFrame.setVisible(true);
 
-        counterGrid.getArr().get(15).setColor(gridInt, 1);
 
         System.out.println();
+
+        // TODO: Move into a separate class/file
+
+        Gameplay gameplay = new Gameplay(buildFrame, counterGrid);
+
         printArr(gridInt);
+        System.out.println();
+        gameplay.startGame(nextButton, gridInt);
+
+
     }
 
-    private static void printArr(int[] gridInt) {
+    private static void printArr(int[][] gridInt) {
         for (int i = 0; i < gridInt.length; i++) {
-            System.out.print(gridInt[i] + " ");
-            if ((i + 1) % 7 == 0) {
-                System.out.println();
+            for (int j = 0; j < gridInt[i].length; j++) {
+                System.out.print(gridInt[i][j] + " ");
             }
+            System.out.println();
         }
     }
+
 }

@@ -10,18 +10,21 @@ public class CounterGrid{
     /**
      * Creates a Grid that contains Multiple counters and adds it to the JFrame- buildFrame
      * @param buildFrame The main JFrame
-     * @param gridInt An Int[] that contains the colors of every Counter in the counterGrid
+     * @param gridInt An Int[][] that contains the colors of every Counter in the counterGrid
      */
-    public void createGrid(JFrame buildFrame, int[] gridInt) {
+    public void createGrid(JFrame buildFrame, int[][] gridInt) {
         JPanel counterGrid = new JPanel();
         counterGrid.setSize(700, 600);
         counterGrid.setLayout(new GridLayout(6, 7));
 
         for (int i = 0; i < 42; i++) {
-            Counter count = new Counter(i, 2, counterGrid.getBounds());
+            int row = (int) Math.floor(i/7);
+            int column = i%7;
+            Counter count = new Counter(row, column, 2, counterGrid.getBounds());
             counterGrid.add(count);
             connectGrid.add(count);
-            connectGrid.get(i).setColor(gridInt, gridInt[i]);
+            connectGrid.get(i).setColor(gridInt, gridInt[row][column]);
+
         }
 
         buildFrame.add(counterGrid, BorderLayout.CENTER);
@@ -33,17 +36,15 @@ public class CounterGrid{
 
     /**
      * Sets the Color of all the counters to white and sets the entire int arr to 0 to represent the change
-     * @param gridInt An Int[] that contains the colors of every Counter in the counterGrid
+     * @param gridInt An Int[][] that contains the colors of every Counter in the counterGrid
      */
-    public void clearGrid(int[] gridInt) {
-        int j =0;
-        for (int i = 0; i< gridInt.length; i++) {
-            j++;
-            System.out.print(gridInt[i] + " ");
-            connectGrid.get(i).setColor(gridInt, gridInt[i]);
+    public void clearGrid(int[][] gridInt) {
 
-            if (j % 7 ==0){
-                System.out.println();
+        int counter = 0;
+        for (int i = 0; i < gridInt.length; i++){
+            for (int j = 0; j < gridInt[i].length; j++) {
+                connectGrid.get(counter).setColor(gridInt, 0/*gridInt[i][j]*/);
+                counter++;
             }
         }
     }
