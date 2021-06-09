@@ -19,15 +19,15 @@ public class Gameplay {
                         To Start select one of 7 positions to place your counter.
                         After you place your counter, your bot opponent will place
                         their counter.
-                        To win you must get 4 of your counters in row, Vertical,
-                        Horizontal, or Diagonal, before the bot does!!!""",
-                "Let's Start!", JOptionPane.INFORMATION_MESSAGE);
+                        To win you must get 4 of your counters in Vertical,
+                        Horizontal, or Diagonal row, before the bot does!!!""",
+                "Let's Begin!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static void printArr(int[][] gridInt) {
-        for (int i = 0; i < gridInt.length; i++) {
-            for (int j = 0; j < gridInt[i].length; j++) {
-                System.out.print(gridInt[i][j] + " ");
+        for (int[] ints : gridInt) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
             }
             System.out.println();
         }
@@ -46,7 +46,7 @@ public class Gameplay {
 
         WinCheck winCheck = new WinCheck(gridInt);
 
-        outerloop:
+
         while (true) { // Beginning of Game
             while (true) {
 
@@ -58,28 +58,38 @@ public class Gameplay {
                 if (isInteger(posStr)) {
                     pos = Integer.parseInt(posStr) - 1;
                     if (pos >= 0 && pos <= 6) {
+
+                        // Error when user tries to place counter in a slot that is already filled.
+                        // TODO: Change to JOptionPane.showMessage...
+                        if (rowNum[pos] == 0) {
+                            System.out.println("Not Possible");
+                            continue;
+                        }
                         rowNum[pos]--;
                         break;
                     }
                 }
             }
-            if (rowNum[pos] == -1) break outerloop;
+
+
             // Updating the main Frame when a new counter is placed
             counterGrid.getArr().get(rowNum[pos] * 7 + pos).setColor(gridInt, nextButton.getTurn());
             buildFrame.repaint();
+
+            // TODO: Make method to check if player wins inside on WinCheck Class and convert 'prints' to a JOptionPane
             if (winCheck.checkWin() == 2) {
                 System.out.println("Player 1: WINSSS ");
-                break outerloop;
+                break;
             } else if (winCheck.checkWin() == 1) {
                 System.out.println("Player 2: WINSSS");
-                break outerloop;
+                break;
             } else {
                 System.out.println("Continue!");
             }
 
 
-//            nextButton.buttonClick();
-            nextButton.nextTurn();
+            nextButton.buttonClick();
+//            nextButton.nextTurn();
             printArr(gridInt);
             System.out.println();
         }

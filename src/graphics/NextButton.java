@@ -12,7 +12,7 @@ public class NextButton extends JButton {
         addActionListener(new NextListen());
     }
 
-    public void nextTurn(){
+    public void nextTurn() {
         turn = !turn;
     }
 
