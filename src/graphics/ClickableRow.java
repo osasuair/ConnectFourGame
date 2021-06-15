@@ -23,7 +23,6 @@ public class ClickableRow extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 active = true;
-                System.out.println(id);
             }
 
             @Override

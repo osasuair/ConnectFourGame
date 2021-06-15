@@ -36,12 +36,14 @@ public class ClickRowArr extends JPanel {
 
     // Loops through the rows to see which one is active
     public int getActiveId() {
-        int id = -1;
-        for (int i = 0; i < 7; i++) {
-            if (clickRowArr[i].isActive()) id = i;
+        int i;
+        for (i = 0; i < 8; i++) {
+            if (i == 7) {
+                i = -1;
+                break;
+            }
+            if (clickRowArr[i].isActive()) break;
         }
-
-        reset();
-        return id;
+        return i;
     }
 }

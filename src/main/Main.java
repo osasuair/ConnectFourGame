@@ -22,6 +22,11 @@ public class Main {
         System.out.println();
         gameplay.startGame(mainFrame.getNextButton(), gridInt);
 
+        while(true){
+            boolean check = gameplay.endGame(gridInt);
+            if (check == false) break;
+        }
+
 
     }
 
