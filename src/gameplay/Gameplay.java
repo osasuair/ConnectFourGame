@@ -2,10 +2,8 @@ package gameplay;
 
 import graphics.CounterGrid;
 import graphics.MainFrame;
-import graphics.NextButton;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Gameplay {
     private final CounterGrid counterGrid;
@@ -16,7 +14,7 @@ public class Gameplay {
         this.mainFrame = mainFrame;
         this.counterGrid = counterGrid;
 
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(mainFrame,
                 """
                         Connect 4 Game!
                         To Start select one of 7 positions to place your counter.
@@ -39,26 +37,27 @@ public class Gameplay {
     /**
      * When the game begins it asks the user to select a position
      *
-     * @param nextButton Button that tells the program to move on to the next turn
-     * @param gridInt    An Int[][] that contains the colors of every Counter in the counterGrid
+     * @param gridInt An Int[][] that contains the colors of every Counter in the counterGrid
      */
-    public void startGame(NextButton nextButton, int[][] gridInt) {
+    public void startGame(int[][] gridInt) {
 
         WinCheck winCheck = new WinCheck(gridInt);
+        boolean turn = false;
 
         while (true) { // Beginning of Game
             int pos;
+
             while (true) {
 
                 mainFrame.repaint();
 
+                // Get the selected column number
                 do {
                     pos = mainFrame.getClickRows().getActiveId();
                 } while (pos == -1);
                 mainFrame.getClickRows().getClickRowArr()[pos].setActive(false);
 
                 // Converting the isle number to the correct position in the array
-
                 if (pos <= 6) {
 
                     // Error when user tries to place counter in a slot that is already filled.
@@ -73,44 +72,23 @@ public class Gameplay {
             }
 
             // Check for draws
-            int check = 0;
+            int checkDraw = 0;
             if (rowNum[0] == 0) {
                 for (int i = 1; i < 7; i++) {
                     if (rowNum[i] == 0) {
-                        check++;
+                        checkDraw++;
                     } else break;
                 }
             }
 
-
             // Updating the main Frame when a new counter is placed
-            // TODO: Remove next button from changing the color
-            counterGrid.getArr().get(rowNum[pos] * 7 + pos).setColor(gridInt, nextButton.getTurn());
+            counterGrid.getArr().get(rowNum[pos] * 7 + pos).setColor(gridInt, (turn ? 1 : 2));
+            turn = !turn; // Changing to the next turn
+
             mainFrame.repaint();
 
-
-            JLabel icon = new JLabel();
-            icon.setIcon(new ImageIcon(getClass().getResource("/resources/downArrow.png")));
-
-            // TODO: Make method to check if player wins inside on WinCheck Class and convert 'prints' to a JOptionPane
-            if (winCheck.checkWin() == 2) {
-                JOptionPane.showMessageDialog(mainFrame, "Player 1: WINS!", "Winner", JOptionPane.INFORMATION_MESSAGE, icon.getIcon());
-                System.out.println("Player 1: WINSSS ");
-                break;
-            } else if (winCheck.checkWin() == 1) {
-                System.out.println("Player 2: WINSSS");
-                break;
-            } else if (check == 6) {
-                System.out.println("DRAW");
-                break;
-            } else {
-                System.out.println("Continue!");
-            }
-
-
-            // TODO: Change Next Button to reset button
-//            nextButton.buttonClick();
-            nextButton.nextTurn();
+            //Check For Winner
+            if (winCheck.winnerResult(mainFrame, checkDraw)) break;
             printArr(gridInt);
             System.out.println();
         }
@@ -122,12 +100,18 @@ public class Gameplay {
             counterGrid.clearGrid(gridInt);
 
             rowNum = new int[]{6, 6, 6, 6, 6, 6, 6};
-            startGame(mainFrame.getNextButton(), gridInt);
+            startGame(gridInt);
             return true;
         }
 
         mainFrame.dispose();
         return false;
+    }
+
+    public void reset(int[][] gridInt) {
+        counterGrid.clearGrid(gridInt);
+        rowNum = new int[]{6, 6, 6, 6, 6, 6, 6};
+        startGame(gridInt);
     }
 
 }
