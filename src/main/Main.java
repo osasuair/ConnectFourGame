@@ -1,3 +1,5 @@
+// Paul Airuehia - Connect Four Game, made from scratch
+
 package main;
 
 import gameplay.Gameplay;
