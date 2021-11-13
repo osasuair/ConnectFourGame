@@ -1,2 +1,2 @@
 # ConnectFourGame
- Connect 4 Game that allows a user to play against a Computer
+ Connect 4 Game for 2 users programmed in Java using JComponent Classes
