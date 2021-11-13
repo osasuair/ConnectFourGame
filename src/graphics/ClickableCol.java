@@ -6,19 +6,31 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
-public class ClickableRow extends JPanel {
+public class ClickableCol extends JPanel {
     private final Color TRANS_YELLOW = new Color(255, 255, 0, 116);
     private final int id;
     private boolean active;
 
-    public ClickableRow(int id) {
+    public ClickableCol(int id) {
+        /**
+         * Function takes in the id of column as arg and draws column
+         *
+         * @param id integer that defines the number of column
+         */
+
         this.id = id;
         setSize(100, 700);
         setBackground(new Color(0, 0, 0, 0)); // Transparent
         setIgnoreRepaint(true);
     }
 
-    public ClickableRow addListener(MainFrame mainFrame) {
+    public ClickableCol addListener(MainFrame mainFrame) {
+        /**
+         * event listener to set column to active when it is clicked
+         *
+         * @param mainFrame The frame where the clickable columns are placed
+         * */
+
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -56,9 +68,5 @@ public class ClickableRow extends JPanel {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public int getId() {
-        return id;
     }
 }

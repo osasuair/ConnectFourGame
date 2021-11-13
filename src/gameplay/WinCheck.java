@@ -7,14 +7,21 @@ import java.util.Objects;
 
 public class WinCheck {
     private final int[][] gridInt;
-    private final ImageIcon winnerIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/trophy.png")));
-    private final ImageIcon drawGameIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/handshake.png")));
+    private final ImageIcon winnerIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(
+            "/resources/trophy.png")));
+    private final ImageIcon drawGameIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(
+            "/resources/handshake.png")));
 
     public WinCheck(int[][] gridInt) {
         this.gridInt = gridInt;
     }
 
     private int checkWin() {
+        /**
+         * function that uses an 2 dimensional array to check and see if a player in the game has won
+         *
+         * @return int - player that won the game
+         */
 
         final int HEIGHT = gridInt.length;
         final int WIDTH = gridInt[0].length;
@@ -53,19 +60,34 @@ public class WinCheck {
     }
 
     public boolean winnerResult(MainFrame mainFrame, int checkDraw) {
-        int winner = checkWin();
+        /**
+         * returns the result if the game has ended or is still going in a boolean and if the game has ended, sends
+         * out a JOption message Box
+         *
+         * @param mainFrame frame which the game is happening on
+         * @param checkDraw integer from the current game which represents teh event where all the columns are full
+         *
+         * @return boolean True if game has ended, false o/w
+         */
 
+        int winner = checkWin();  // calls function to check grid to see if a player has won
+
+        // if player 1 or 2 has won return message
         if (winner == 2) {
-            JOptionPane.showMessageDialog(mainFrame, "Player 1: WINS!", "Winner", JOptionPane.INFORMATION_MESSAGE, winnerIcon);
+            JOptionPane.showMessageDialog(mainFrame, "Player 1: WINS!", "Winner",
+                    JOptionPane.INFORMATION_MESSAGE, winnerIcon);
             return true;
         } else if (winner == 1) {
-            JOptionPane.showMessageDialog(mainFrame, "Player 2: WINS!", "Winner", JOptionPane.INFORMATION_MESSAGE, winnerIcon);
+            JOptionPane.showMessageDialog(mainFrame, "Player 2: WINS!", "Winner",
+                    JOptionPane.INFORMATION_MESSAGE, winnerIcon);
             return true;
         } else if (checkDraw == 6) {
-            JOptionPane.showMessageDialog(mainFrame, "It's A DRAW!", "DRAW", JOptionPane.INFORMATION_MESSAGE, drawGameIcon);
+            JOptionPane.showMessageDialog(mainFrame, "It's A DRAW!", "DRAW",
+                    JOptionPane.INFORMATION_MESSAGE, drawGameIcon);
             return true;
         } else {
-            JOptionPane.showMessageDialog(mainFrame, "Next Turn!", "Continue", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "Next Turn!", "Continue",
+                    JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
     }

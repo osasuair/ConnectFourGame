@@ -10,7 +10,7 @@ public class Main {
 
         int[][] gridInt = new int[6][7]; // The Grid that contains the position of all the counters
 
-        // The main frame for the Connect Four Game
+        // main frame for the 'Connect Four Game'
         MainFrame mainFrame = new MainFrame("Connect Four", 715, 661, gridInt);
 
         // The CounterGrid class contains a JPanel that is used to store the counters and the gridInt Array stores what counters is in what positions.
@@ -19,7 +19,7 @@ public class Main {
 
         // Class that controls the gameplay
         Gameplay gameplay = new Gameplay(mainFrame, counterGrid);
-        mainFrame.getResetButton().setGameplay(gameplay).startListener();
+
 
         gameplay.startGame(gridInt);
 

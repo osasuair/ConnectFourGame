@@ -25,15 +25,6 @@ public class Gameplay {
                 "Let's Begin!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private static void printArr(int[][] gridInt) {
-        for (int[] ints : gridInt) {
-            for (int anInt : ints) {
-                System.out.print(anInt + " ");
-            }
-            System.out.println();
-        }
-    }
-
     /**
      * When the game begins it asks the user to select a position
      *
@@ -55,7 +46,8 @@ public class Gameplay {
                 do {
                     pos = mainFrame.getClickRows().getActiveId();
                 } while (pos == -1);
-                mainFrame.getClickRows().getClickRowArr()[pos].setActive(false);
+
+                mainFrame.getClickRows().getClickColArr()[pos].setActive(false);
 
                 // Converting the isle number to the correct position in the array
                 if (pos <= 6) {
@@ -89,8 +81,7 @@ public class Gameplay {
 
             //Check For Winner
             if (winCheck.winnerResult(mainFrame, checkDraw)) break;
-            printArr(gridInt);
-            System.out.println();
+
         }
     }
 
@@ -106,12 +97,6 @@ public class Gameplay {
 
         mainFrame.dispose();
         return false;
-    }
-
-    public void reset(int[][] gridInt) {
-        counterGrid.clearGrid(gridInt);
-        rowNum = new int[]{6, 6, 6, 6, 6, 6, 6};
-        startGame(gridInt);
     }
 
 }

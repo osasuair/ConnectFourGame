@@ -5,29 +5,24 @@ import java.awt.*;
 
 
 public class MainFrame extends JFrame {
-    public ResetButton reset;
-    private final ClickRowArr clickRows = new ClickRowArr(this);
+    private final ClickColArr clickRows = new ClickColArr(this);
 
 
-    /**
-     * Creates a window for the grid
-     *
-     * @param title   Title of the frame
-     * @param w       width
-     * @param h       height
-     */
+
     public MainFrame(String title, int w, int h, int[][] gridInt) {
+        /**
+         * Creates a window for the grid
+         *
+         * @param title   Title of the frame
+         * @param w       width
+         * @param h       height
+         */
 
-        // Using the Border Layout to organize the different elements in the game
-        this.setLayout(new BorderLayout());
 
         // Adding the Clickable rows from the ClickRowArr class to the main frame
         add(clickRows, BorderLayout.CENTER);
         clickRows.start(this);
 
-        // Adding the reset button
-        reset = new ResetButton(gridInt);
-        add(reset, BorderLayout.PAGE_END);
 
         // Set Frame title, size, minimum size, border, and location
         setTitle(title);
@@ -38,11 +33,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public ClickRowArr getClickRows() {
+    public ClickColArr getClickRows() {
         return clickRows;
-    }
-
-    public ResetButton getResetButton() {
-        return reset;
     }
 }
